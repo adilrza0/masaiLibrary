@@ -1,6 +1,6 @@
 const express =require("express");
 const swaggerUi=require("swagger-ui-express")
-
+const cors=require("cors")
 
 const connection = require("./connection");
 const { userRouter } = require("./Routes/user.router");
@@ -10,7 +10,7 @@ const { swaggerSpec } = require("./swagger");
 require("dotenv").config()
 const app=express();
 
-
+app.use(cors())
 app.use(express.json())
 app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 
