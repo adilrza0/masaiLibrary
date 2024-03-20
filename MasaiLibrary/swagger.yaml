@@ -1,0 +1,236 @@
+swagger: "2.0"
+info:
+  title: Masai Library API
+  description: Backend API for Masai Library
+  version: "1.0.0"
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /register:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      parameters:
+        - in: body
+          name: body
+          description: User object that needs to be registered
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: User registered successfully
+        "500":
+          description: Internal server error
+  /login:
+    post:
+      summary: Login user
+      tags:
+        - Authentication
+      parameters:
+        - in: body
+          name: body
+          description: User credentials for login
+          required: true
+          schema:
+            $ref: "#/definitions/Login"
+      responses:
+        "200":
+          description: User logged in successfully
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+        "400":
+          description: Invalid credentials
+        "500":
+          description: Internal server error
+  /books:
+    get:
+      summary: Get all books or filter by category or author
+      tags:
+        - Books
+      parameters:
+        - in: query
+          name: category
+          description: Filter books by category
+          type: string
+        - in: query
+          name: author
+          description: Filter books by author
+          type: string
+      responses:
+        "200":
+          description: List of books
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Book"
+        "500":
+          description: Internal server error
+    post:
+      summary: Add a new book
+      tags:
+        - Books
+      parameters:
+        - in: body
+          name: body
+          description: Book object that needs to be added
+          required: true
+          schema:
+            $ref: "#/definitions/Book"
+      security:
+        - jwt: []
+      responses:
+        "201":
+          description: Book added successfully
+        "500":
+          description: Internal server error
+  /books/{id}:
+    get:
+      summary: Get a book by ID
+      tags:
+        - Books
+      parameters:
+        - name: id
+          in: path
+          description: ID of the book to retrieve
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Book details retrieved successfully
+          schema:
+            $ref: "#/definitions/Book"
+        "404":
+          description: Book not found
+        "500":
+          description: Internal server error
+    put:
+      summary: Update a book by ID
+      tags:
+        - Books
+      parameters:
+        - name: id
+          in: path
+          description: ID of the book to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Book object containing updated information
+          required: true
+          schema:
+            $ref: "#/definitions/Book"
+      security:
+        - jwt: []
+      responses:
+        "204":
+          description: Book updated successfully
+        "500":
+          description: Internal server error
+    delete:
+      summary: Delete a book by ID
+      tags:
+        - Books
+      parameters:
+        - name: id
+          in: path
+          description: ID of the book to delete
+          required: true
+          type: string
+      security:
+        - jwt: []
+      responses:
+        "202":
+          description: Book deleted successfully
+        "500":
+          description: Internal server error
+  /order:
+    post:
+      summary: Place an order for books
+      tags:
+        - Orders
+      parameters:
+        - in: body
+          name: body
+          description: Order details including list of books and total amount
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
+      security:
+        - jwt: []
+      responses:
+        "201":
+          description: Order placed successfully
+        "500":
+          description: Internal server error
+  /orders:
+    get:
+      summary: Get all orders with user and book details
+      tags:
+        - Orders
+      security:
+        - jwt: []
+      responses:
+        "200":
+          description: List of orders with user and book details
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Order"
+        "500":
+          description: Internal server error
+definitions:
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Book:
+    type: object
+    properties:
+      title:
+        type: string
+      author:
+        type: string
+      category:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: number
+  Order:
+    type: object
+    properties:
+      user:
+        type: string
+      books:
+        type: array
+        items:
+          type: string
+      totalAmount:
+        type: number
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: Authorization
+    in: header
