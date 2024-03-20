@@ -34,7 +34,7 @@ View the API documentation using Swagger UI:
 
 Or you can view the documentation directly here:
 
-<iframe src="https://gifted-gold-chimpanzee.cyclic.app/" width="100%" height="600px" style="border:none;"></iframe>
+<iframe src="https://gifted-gold-chimpanzee.cyclic.app/api-docs" width="100%" height="600px" style="border:none;"></iframe>
 
 ## Routes
 
