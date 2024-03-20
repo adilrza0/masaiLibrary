@@ -30,11 +30,8 @@ To get started with the Masai Library backend, follow these steps:
 
 View the API documentation using Swagger UI:
 
-[Swagger UI](https://your-swagger-ui-url)
+[Swagger UI](https://gifted-gold-chimpanzee.cyclic.app/api-docs)
 
-Or you can view the documentation directly here:
-
-<iframe src="https://gifted-gold-chimpanzee.cyclic.app/api-docs" width="100%" height="600px" style="border:none;"></iframe>
 
 ## Routes
 
