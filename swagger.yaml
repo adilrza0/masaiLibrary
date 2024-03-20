@@ -3,7 +3,7 @@ info:
   title: Masai Library API
   description: Backend API for Masai Library
   version: "1.0.0"
-basePath: /api
+basePath: https://gifted-gold-chimpanzee.cyclic.app/
 schemes:
   - http
   - https
